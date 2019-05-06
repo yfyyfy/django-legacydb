@@ -1,6 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.db import connections
 from django.shortcuts import render
 
+@login_required
 def index(request):
     context = {}
 
