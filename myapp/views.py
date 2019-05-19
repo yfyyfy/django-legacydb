@@ -1,6 +1,13 @@
+from django.http import JsonResponse
+
 from django.contrib.auth.decorators import login_required
 from django.db import connections
 from django.shortcuts import render
+
+from django.contrib.auth.models import User
+if not User.objects.filter(username='test'):
+    user = User.objects.create_user('test', 'test@test.com', 'test')
+    user.save()
 
 @login_required
 def index(request):
@@ -19,6 +26,7 @@ def index(request):
         sales = namedtuplefetchall(cursor)
         context.update({'sales': sales})
 
+    return JsonResponse(context)
     return render(request, 'myapp/index.html', context)
 
 
